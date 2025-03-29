@@ -17,6 +17,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+st._config.set_option("theme.base", "light")
 
 # Apply enhanced custom CSS with modern design
 st.markdown("""
@@ -2229,6 +2230,6 @@ with tabs[2]:
 # Footer
 st.markdown("""
 <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-    <p style="color: #64748b; font-size: 0.9rem;">© 2025 Obesity Risk Assessment Tool | Groupe25 CW. All rights reserved</p>
+    <p style="color: #64748b; font-size: 0.9rem;">© 2025 Obesity Risk Assessment Tool | ECC Coding Week. All rights reserved</p>
 </div>
 """, unsafe_allow_html=True)
