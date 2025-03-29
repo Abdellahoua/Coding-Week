@@ -797,31 +797,32 @@ def create_shap_waterfall_plot(explainer, shap_values, instance, feature_names):
 
 # Create improved SHAP bar plot for feature importance
 def create_shap_bar_plot(explainer, input_array, feature_names):
-    plt.figure(figsize=(12, 8))  # Larger figure for better readability
+    """Generate a SHAP feature importance bar plot with Streamlit-compatible formatting."""
     
-    # Calculate SHAP values
+    # Ensure SHAP values are computed correctly
     shap_values = explainer.shap_values(input_array)
     
-    # Determine if we're dealing with a classification or regression model
-    if isinstance(shap_values, list):
-        # For classification, use the positive class
-        shap_values_plot = shap_values[0] if isinstance(shap_values, list) else shap_values
-    else:
-        shap_values_plot = shap_values
+    # Handle classification models (multi-class SHAP output)
+    if isinstance(shap_values, list):  
+        shap_values = np.mean(shap_values, axis=0)  # Average across classes if needed
     
-    # Create improved summary plot
+    # Create SHAP summary bar plot
+    plt.figure(figsize=(10, 6))  # Adjust size for better readability
     shap.summary_plot(
-        shap_values_plot, 
+        shap_values, 
         input_array, 
         feature_names=feature_names, 
         plot_type="bar", 
-        show=False,
-        color=plt.cm.viridis  # Use better color scheme
+        show=False  # Prevent automatic showing in Jupyter
     )
     
-    plt.title("Feature Importance Based on SHAP Values", fontsize=14)
-    plt.tight_layout()
-    return plt
+    # Enhance visualization
+    plt.title("Feature Importance in Obesity Prediction", fontsize=14, fontweight="bold")
+    plt.xlabel("Mean SHAP Value (Feature Importance)", fontsize=12)
+    plt.grid(axis="x", linestyle="--", alpha=0.5)
+    
+    # Display the plot correctly in Streamlit
+    st.pyplot(plt)
 
 # Create improved SHAP decision plot
 def create_shap_decision_plot(explainer, shap_values, instance, feature_names):
@@ -1311,13 +1312,14 @@ tabs = st.tabs(["Risk Assessment", "Health Profile", "Model Insights"])
 with tabs[0]:
     st.markdown('<h2 class="subheader">Personal Risk Assessment</h2>', unsafe_allow_html=True)
     
-    with st.container():
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        
-        # Create two columns for input form
-        col1, col2 = st.columns(2)
-        
-        with col1:
+    # Create two main columns for the entire layout
+    left_col, right_col = st.columns([1, 1])
+    
+    # Left column for input form
+    with left_col:
+        with st.container():
+            st.markdown('<div class="card">', unsafe_allow_html=True)
+            
             st.markdown('<p class="section-title">Demographics</p>', unsafe_allow_html=True)
             gender = st.selectbox("Gender", options=["Male", "Female"], index=0)
             age = st.number_input("Age", min_value=10, max_value=100, value=30)
@@ -1328,8 +1330,7 @@ with tabs[0]:
             family_history = st.selectbox("Family History of Obesity", options=["No", "Yes"], index=0)
             smoking = st.selectbox("Do you smoke?", options=["No", "Yes"], index=0)
             alcohol = st.selectbox("Alcohol Consumption", options=["Never", "Sometimes", "Frequently", "Always"], index=1)
-        
-        with col2:
+            
             st.markdown('<p class="section-title">Dietary Habits</p>', unsafe_allow_html=True)
             high_caloric_food = st.selectbox("High Caloric Food Consumption", options=["No", "Yes"], index=0)
             vegetable_consumption = st.selectbox("Vegetable Consumption", options=["Never", "Sometimes", "Always"], index=1)
@@ -1340,18 +1341,20 @@ with tabs[0]:
             
             st.markdown('<p class="section-title">Lifestyle</p>', unsafe_allow_html=True)
             physical_activity = st.selectbox("Physical Activity Frequency", 
-                                          options=["Never", "Once or twice a week", "Two or three times a week", "More than three times a week"], 
-                                          index=1)
+                                      options=["Never", "Once or twice a week", "Two or three times a week", "More than three times a week"], 
+                                      index=1)
             screen_time = st.selectbox("Daily Screen Time", options=["None", "Less than 1h", "1-3h", "More than 3h"], index=2)
             transportation = st.selectbox("Primary Mode of Transportation", 
-                                      options=["Automobile", "Public Transportation", "Motorbike", "Bike", "Walking"], 
-                                      index=0)
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-        # Create a button to predict
-        predict_button = st.button("Predict Obesity Risk", type="primary")
-        
+                                  options=["Automobile", "Public Transportation", "Motorbike", "Bike", "Walking"], 
+                                  index=0)
+                        
+            # Create a button to predict
+            predict_button = st.button("Predict Obesity Risk", type="primary")
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Right column for results and explanations
+    with right_col:
         # Process prediction when button is clicked
         if predict_button and model:
             # Transform inputs into model format
@@ -1394,7 +1397,7 @@ with tabs[0]:
             # Display results
             st.markdown('<div class="card">', unsafe_allow_html=True)
             
-            # Create two columns for results
+            # Create two columns for prediction and BMI display
             results_col1, results_col2 = st.columns(2)
             
             with results_col1:
@@ -1408,7 +1411,7 @@ with tabs[0]:
                 # Display category chart
                 category_chart = create_category_chart(category)
                 st.plotly_chart(category_chart, use_container_width=True)
-                
+            
             with results_col2:
                 st.markdown(f'<h3 class="section-title">Body Mass Index (BMI)</h3>', unsafe_allow_html=True)
                 st.markdown(f'<div class="prediction-result" style="background-color: {bmi_color}20; border: 1px solid {bmi_color};">'
@@ -1420,7 +1423,7 @@ with tabs[0]:
                 bmi_gauge = create_bmi_gauge(bmi)
                 st.plotly_chart(bmi_gauge, use_container_width=True)
             
-            # Add a divider
+            # Add a divider for risk factors analysis
             st.markdown('<div class="section-divider"><div class="section-divider-line"></div>'
                       '<div class="section-divider-text">Risk Factors Analysis</div>'
                       '<div class="section-divider-line"></div></div>', unsafe_allow_html=True)
@@ -1479,20 +1482,14 @@ with tabs[0]:
                         # Ensure we have a flat array
                         shap_values_for_instance = np.array(shap_values_for_instance).flatten()
                         
-                        # Log sizes for debugging
-                        #st.info(f"SHAP values length: {len(shap_values_for_instance)}, Feature names: {len(feature_names)}")
-                        
                         # Handle the dimension mismatch
                         if len(shap_values_for_instance) != len(feature_names):
-                            #st.warning(f"SHAP values length ({len(shap_values_for_instance)}) doesn't match feature names ({len(feature_names)}). Adjusting dimensions...")
-                            
                             # If there are more SHAP values than features, it might be one-hot encoded
                             if len(shap_values_for_instance) > len(feature_names):
                                 # Approach 1: Sum up SHAP values for each feature (assuming one-hot encoding)
                                 # This is just a heuristic approach
                                 values_per_feature = len(shap_values_for_instance) // len(feature_names)
                                 if values_per_feature * len(feature_names) == len(shap_values_for_instance):
-                                    #st.info(f"Detected possible one-hot encoding. Aggregating SHAP values ({values_per_feature} values per feature).")
                                     aggregated_values = []
                                     for i in range(len(feature_names)):
                                         start_idx = i * values_per_feature
@@ -1754,6 +1751,7 @@ with tabs[0]:
                             for feature, value in top_features:
                                 direction = "increases" if value > 0 else "decreases"
                                 st.markdown(f"- **{feature}**: {direction} risk by {abs(value):.2f}")
+                                
                         # SHAP visualization tabs
                         shap_tabs = st.tabs(["Force Plot", "Waterfall Plot", "Feature Importance", "Decision Plot"])
                         
@@ -1911,6 +1909,8 @@ with tabs[0]:
                     st.error(f"Error in SHAP analysis: {str(e)}")
                     import traceback
                     st.error(f"Detailed error: {traceback.format_exc()}")
+            
+            st.markdown('</div>', unsafe_allow_html=True)
 with tabs[1]:
     # Load custom CSS
     load_css()
@@ -2168,27 +2168,40 @@ with tabs[2]:
     # Check if model is available
     if model:
         try:
-            # Create a sample input for visualization
-            sample_input = np.array([
-                [0, 30, 170, 70, 0, 0, 1, 1, 1, 0, 1, 0, 1, 2, 1, 0]
-            ])
+            sample_input = np.array([[0, 30, 170, 70, 0, 0, 1, 1, 1, 0, 1, 0, 1, 2, 1, 0]])
             
-            # Create SHAP explainer
-            explainer = create_shap_explainer(model)
+            explainer = create_shap_explainer(model)  # Ensure your function works correctly
             feature_names = get_feature_names()
             
-            # Create feature importance bar plot
-            importance_plot = create_shap_bar_plot(explainer, sample_input, feature_names)
-            st.pyplot(importance_plot, clear_figure=True)
-            
-            st.markdown("""
-            <p style="margin-top: 16px;">This chart shows which factors have the most impact on obesity risk predictions. Factors at the top have the highest influence on the model's decisions. The SHAP value measures how much each factor contributes to pushing the prediction higher or lower from the baseline.</p>
-            """, unsafe_allow_html=True)
+            create_shap_bar_plot(explainer, sample_input, feature_names)  # Updated function call
             
         except Exception as e:
-            st.error(f"Error generating model insights: {e}")
+            st.error(f"Error generating SHAP insights: {e}")
+
     else:
         st.warning("Model not available. Unable to display feature importance.")
+    
+    # Display category encoding in a beautiful format
+    st.markdown("""
+        <div style="
+            background-color: #f8fafc; 
+            padding: 16px; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            margin-top: 20px;">
+            <h3 style="color: #2563eb; font-size: 20px; margin-bottom: 10px;">Obesity Risk Categories Encoding</h3>
+            <ul style="list-style-type: none; padding-left: 0; font-size: 16px;">
+                <li><strong style="color: #3b82f6;">0:</strong> Insufficient Weight</li>
+                <li><strong style="color: #10b981;">1:</strong> Normal Weight</li>
+                <li><strong style="color: #f59e0b;">2:</strong> Obesity Type I</li>
+                <li><strong style="color: #f97316;">3:</strong> Obesity Type II</li>
+                <li><strong style="color: #ef4444;">4:</strong> Obesity Type III</li>
+                <li><strong style="color: #dc2626;">5:</strong> Overweight Level I</li>
+                <li><strong style="color: #b91c1c;">6:</strong> Overweight Level II</li>
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
+
     
     st.markdown('</div>', unsafe_allow_html=True)
     
