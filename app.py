@@ -344,6 +344,239 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def load_css():
+    st.markdown("""
+    <style>
+    /* Modern, professional styling for the Health Profile tab */
+    .subheader {
+        color: #1e40af;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #dbeafe;
+        padding-bottom: 0.5rem;
+    }
+    
+    .card {
+        background-color: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+        color: #334155;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    .section-title::before {
+        content: "";
+        display: inline-block;
+        width: 0.5rem;
+        height: 1.25rem;
+        background-color: #3b82f6;
+        margin-right: 0.5rem;
+        border-radius: 1rem;
+    }
+    
+    .metric-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+    
+    .metric-item {
+        flex: 1 1 120px;
+        background-color: #f8fafc;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid #e2e8f0;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .metric-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .metric-item::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: 100%;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    }
+    
+    .metric-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+    
+    .metric-label {
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .metric-info {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        color: #94a3b8;
+        cursor: help;
+    }
+    
+    .placeholder-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+        background-color: #f1f5f9;
+        border-radius: 0.75rem;
+        border: 2px dashed #cbd5e1;
+    }
+    
+    .placeholder-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #64748b;
+    }
+    
+    .placeholder-text {
+        color: #64748b;
+        font-size: 1.125rem;
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    .health-score-container {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 1.5rem auto;
+    }
+    
+    .recommendation-item {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: #f8fafc;
+        margin-bottom: 0.75rem;
+        border-left: 4px solid #3b82f6;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .recommendation-item:hover {
+        background-color: #f0f9ff;
+        transform: translateX(5px);
+    }
+    
+    .recommendation-number {
+        background-color: #3b82f6;
+        color: white;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.75rem;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+    }
+    
+    .recommendation-text {
+        font-weight: 500;
+        color: #334155;
+        flex-grow: 1;
+    }
+    
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color: #334155;
+        color: white;
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 0.75rem;
+    }
+    
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        margin-right: 0.5rem;
+    }
+    
+    .badge-success {
+        background-color: #dcfce7;
+        color: #15803d;
+    }
+    
+    .badge-warning {
+        background-color: #fef9c3;
+        color: #a16207;
+    }
+    
+    .badge-danger {
+        background-color: #fee2e2;
+        color: #b91c1c;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .metric-container {
+            flex-direction: column;
+        }
+        
+        .metric-item {
+            flex: 1 1 100%;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 
 # Load model function
 def load_model():
@@ -500,13 +733,15 @@ def create_shap_explainer(model):
 
 # Calculate SHAP values for a specific instance
 def calculate_shap_values(explainer, instance):
+    # Handle both single and multi-class outputs
     shap_values = explainer.shap_values(instance)
     return shap_values
 
-# Create SHAP force plot
+# Create SHAP force plot with improved styling
 def create_shap_force_plot(explainer, shap_values, instance, feature_names):
-    plt.figure(figsize=(10, 3))
+    plt.figure(figsize=(12, 4))  # Slightly larger figure
     
+    # Handle different types of expected values
     if hasattr(explainer, 'expected_value'):
         if isinstance(explainer.expected_value, list):
             expected_value = explainer.expected_value[0]
@@ -515,61 +750,106 @@ def create_shap_force_plot(explainer, shap_values, instance, feature_names):
     else:
         expected_value = 0
     
-    # Fix: Remove `matplotlib=True`
-    shap_plot = shap.force_plot(expected_value, shap_values, instance, feature_names=feature_names)
+    # Create force plot with improved visualization
+    shap_plot = shap.force_plot(
+        expected_value, 
+        shap_values, 
+        instance, 
+        feature_names=feature_names,
+        link="logit"  # Better for classification problems
+    )
     return shap_plot
 
-
-# Create SHAP waterfall plot
+# Create improved SHAP waterfall plot
 def create_shap_waterfall_plot(explainer, shap_values, instance, feature_names):
     plt.figure(figsize=(10, 6))
     
     # Get the expected value (base value)
     if hasattr(explainer, 'expected_value'):
         if isinstance(explainer.expected_value, list):
-            # For multi-class models
             expected_value = explainer.expected_value[0]
         else:
-            # For binary classification or regression
             expected_value = explainer.expected_value
     else:
-        # If no expected_value attribute, use 0 as fallback
         expected_value = 0
     
-    shap.plots._waterfall.waterfall_legacy(expected_value, shap_values, 
-                                          feature_names=feature_names, show=False)
+    # Use a try-except block to handle different SHAP library versions
+    try:
+        # New SHAP version
+        shap.plots.waterfall(shap.Explanation(
+            values=shap_values,
+            base_values=expected_value,
+            data=instance,
+            feature_names=feature_names
+        ), show=False)
+    except:
+        # Legacy version fallback
+        shap.plots._waterfall.waterfall_legacy(
+            expected_value, 
+            shap_values, 
+            feature_names=feature_names, 
+            show=False
+        )
+    
+    plt.title("Feature Impact on Obesity Risk Prediction", fontsize=14)
     plt.tight_layout()
     return plt
 
-# Create SHAP bar plot for feature importance
+# Create improved SHAP bar plot for feature importance
 def create_shap_bar_plot(explainer, input_array, feature_names):
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))  # Larger figure for better readability
+    
+    # Calculate SHAP values
     shap_values = explainer.shap_values(input_array)
-    shap.summary_plot(shap_values, input_array, feature_names=feature_names, plot_type="bar", show=False)
+    
+    # Determine if we're dealing with a classification or regression model
+    if isinstance(shap_values, list):
+        # For classification, use the positive class
+        shap_values_plot = shap_values[0] if isinstance(shap_values, list) else shap_values
+    else:
+        shap_values_plot = shap_values
+    
+    # Create improved summary plot
+    shap.summary_plot(
+        shap_values_plot, 
+        input_array, 
+        feature_names=feature_names, 
+        plot_type="bar", 
+        show=False,
+        color=plt.cm.viridis  # Use better color scheme
+    )
+    
+    plt.title("Feature Importance Based on SHAP Values", fontsize=14)
     plt.tight_layout()
     return plt
 
-# Create SHAP decision plot
+# Create improved SHAP decision plot
 def create_shap_decision_plot(explainer, shap_values, instance, feature_names):
-    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(12, 10))  # Larger figure for better readability
     
     # Get the expected value (base value)
     if hasattr(explainer, 'expected_value'):
         if isinstance(explainer.expected_value, list):
-            # For multi-class models
             expected_value = explainer.expected_value[0]
         else:
-            # For binary classification or regression
             expected_value = explainer.expected_value
     else:
-        # If no expected_value attribute, use 0 as fallback
         expected_value = 0
     
-    shap.decision_plot(expected_value, shap_values, feature_names=feature_names, show=False)
+    # Create improved decision plot
+    shap.decision_plot(
+        expected_value, 
+        shap_values, 
+        feature_names=feature_names, 
+        show=False,
+        feature_display_range=slice(-1, -16, -1)  # Show most important features at top
+    )
+    
+    plt.title("Decision Path for Obesity Risk Prediction", fontsize=14)
     plt.tight_layout()
     return plt
 
-# Get feature names
+# Get feature names (unchanged)
 def get_feature_names():
     return [
         "Gender", "Age", "Height", "Weight", "Family_History", "High_Caloric_Food",
@@ -578,9 +858,9 @@ def get_feature_names():
         "Screen_Time", "Alcohol", "Transportation"
     ]
 
-# Translate encoded values to human-readable format
+# Enhanced readable values function with better formatting
 def get_readable_values(input_data):
-    # Mapping dictionaries for encoded values
+    # Mapping dictionaries for encoded values (unchanged)
     gender_map = {0: "Male", 1: "Female"}
     yes_no_map = {0: "No", 1: "Yes"}
     veggie_map = {0: "Never", 1: "Sometimes", 2: "Always"}
@@ -591,29 +871,44 @@ def get_readable_values(input_data):
     screen_map = {0: "None", 1: "Less than 1h", 2: "1-3h", 3: "More than 3h"}
     transport_map = {0: "Automobile", 1: "Public Transportation", 2: "Motorbike", 3: "Bike", 4: "Walking"}
     
-    # Extract values from input_data
-    gender = gender_map[input_data[0]]
-    age = input_data[1]
-    height = input_data[2]
-    weight = input_data[3]
-    family_history = yes_no_map[input_data[4]]
-    high_caloric_food = yes_no_map[input_data[5]]
-    veggie_freq = veggie_map[input_data[6]]
-    main_meals = meals_map[input_data[7]]
-    snacking = frequency_map[input_data[8]]
-    smoking = yes_no_map[input_data[9]]
-    water_intake = water_map[input_data[10]]
-    calorie_monitoring = yes_no_map[input_data[11]]
-    physical_activity = activity_map[input_data[12]]
-    screen_time = screen_map[input_data[13]]
-    alcohol = frequency_map[input_data[14]]
-    transportation = transport_map[input_data[15]]
+    # Extract values safely using get() to handle potential index errors
+    try:
+        gender = gender_map.get(input_data[0], "Unknown")
+        age = input_data[1] if 1 < len(input_data) else "Unknown"
+        height = input_data[2] if 2 < len(input_data) else "Unknown"
+        weight = input_data[3] if 3 < len(input_data) else "Unknown"
+        family_history = yes_no_map.get(input_data[4], "Unknown") if 4 < len(input_data) else "Unknown"
+        high_caloric_food = yes_no_map.get(input_data[5], "Unknown") if 5 < len(input_data) else "Unknown"
+        veggie_freq = veggie_map.get(input_data[6], "Unknown") if 6 < len(input_data) else "Unknown"
+        main_meals = meals_map.get(input_data[7], "Unknown") if 7 < len(input_data) else "Unknown"
+        snacking = frequency_map.get(input_data[8], "Unknown") if 8 < len(input_data) else "Unknown"
+        smoking = yes_no_map.get(input_data[9], "Unknown") if 9 < len(input_data) else "Unknown"
+        water_intake = water_map.get(input_data[10], "Unknown") if 10 < len(input_data) else "Unknown"
+        calorie_monitoring = yes_no_map.get(input_data[11], "Unknown") if 11 < len(input_data) else "Unknown"
+        physical_activity = activity_map.get(input_data[12], "Unknown") if 12 < len(input_data) else "Unknown"
+        screen_time = screen_map.get(input_data[13], "Unknown") if 13 < len(input_data) else "Unknown"
+        alcohol = frequency_map.get(input_data[14], "Unknown") if 14 < len(input_data) else "Unknown"
+        transportation = transport_map.get(input_data[15], "Unknown") if 15 < len(input_data) else "Unknown"
+    except (IndexError, TypeError):
+        # Handle potential errors with input_data
+        return {feature: "Data Error" for feature in get_feature_names()}
     
-    return {
+    # BMI calculation (new)
+    bmi = None
+    if height not in ("Unknown", "Data Error") and weight not in ("Unknown", "Data Error"):
+        try:
+            # Convert height from cm to m for BMI calculation
+            height_m = float(height) / 100
+            bmi = float(weight) / (height_m * height_m)
+            bmi = round(bmi, 1)
+        except:
+            bmi = None
+    
+    result = {
         "Gender": gender,
         "Age": age,
-        "Height": height,
-        "Weight": weight,
+        "Height": f"{height} cm" if height not in ("Unknown", "Data Error") else height,
+        "Weight": f"{weight} kg" if weight not in ("Unknown", "Data Error") else weight,
         "Family_History": family_history,
         "High_Caloric_Food": high_caloric_food,
         "Vegetable_Consumption": veggie_freq,
@@ -627,10 +922,20 @@ def get_readable_values(input_data):
         "Alcohol": alcohol,
         "Transportation": transportation
     }
+    
+    # Add BMI if available
+    if bmi:
+        result["BMI"] = bmi
+    
+    return result
 
-# Generate text explanation based on SHAP values
+# Generate enhanced text explanation based on SHAP values
 def generate_text_explanation(shap_values, feature_names, readable_values):
-    # Convert shap_values to a 1D array if it's not already
+    # Handle different types of shap_values
+    if isinstance(shap_values, list):
+        # For multi-class models, use positive class
+        shap_values = shap_values[0]
+    
     if len(shap_values.shape) > 1:
         shap_values = shap_values.flatten()
     
@@ -640,41 +945,358 @@ def generate_text_explanation(shap_values, feature_names, readable_values):
     # Get indices of top features by absolute value (only from valid indices)
     top_indices = sorted(valid_indices, key=lambda i: abs(shap_values[i]), reverse=True)[:5]
     
-    # Create explanation html
-    explanation = """
+    # Determine prediction direction
+    risk_level = "HIGH" if sum(shap_values) > 0 else "LOW"
+    risk_color = "#ef4444" if risk_level == "HIGH" else "#10b981"
+    
+    # Create explanation html with CSS classes for styling
+    explanation = f"""
     <div class="explanation-card">
-        <h3 style="margin-top: 0; font-size: 1.2rem; font-weight: 600; color: #1e293b; margin-bottom: 1rem;">Key Factors Influencing This Prediction</h3>
+        <!-- Main prediction -->
+        <div class="risk-header">
+            <h2 style="margin: 0; color: {risk_color}; font-size: 24px;">
+                Your obesity risk is <span style="font-weight: bold;">{risk_level}</span>
+            </h2>
+        </div>
+        
+        <h3 style="margin-top: 0; font-size: 18px; color: #333; text-align: center; margin-bottom: 20px;">
+            Here's why our system made this prediction:
+        </h3>
     """
     
-    for idx in top_indices:
+    # Add BMI information with clear explanation if available
+    if "BMI" in readable_values:
+        bmi = readable_values["BMI"]
+        bmi_category = "Unknown"
+        bmi_color = "#666"
+        bmi_explanation = ""
+        
+        if bmi < 18.5:
+            bmi_category = "Underweight"
+            bmi_color = "#3b82f6"
+            bmi_explanation = "Being underweight typically lowers obesity risk, but can have other health concerns."
+        elif 18.5 <= bmi < 25:
+            bmi_category = "Normal weight"
+            bmi_color = "#10b981"
+            bmi_explanation = "Having a normal BMI is associated with lower obesity risk."
+        elif 25 <= bmi < 30:
+            bmi_category = "Overweight"
+            bmi_color = "#f59e0b"
+            bmi_explanation = "Being overweight increases your obesity risk. This is a key factor in your prediction."
+        elif bmi >= 30:
+            bmi_category = "Obese"
+            bmi_color = "#ef4444"
+            bmi_explanation = "Your BMI is in the obese range, which strongly indicates higher obesity risk."
+        
+        explanation += f"""
+        <div class="bmi-box" style="border-left-color: {bmi_color};">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 18px; font-weight: bold;">Your BMI is {bmi}</span>
+                <span style="font-weight: bold; font-size: 18px; color: {bmi_color};">{bmi_category}</span>
+            </div>
+            <p style="margin: 0; font-size: 16px;">{bmi_explanation}</p>
+            <p style="margin-top: 10px; font-size: 14px; color: #666;">BMI = weight(kg) ÷ height(m)²</p>
+        </div>
+        """
+    
+    # Add an introduction to the factors
+    explanation += """
+    <p style="font-size: 16px; margin-bottom: 20px;">
+        These are the most important factors in your prediction:
+    </p>
+    """
+    
+    # Process each top factor
+    for i, idx in enumerate(top_indices):
         feature = feature_names[idx]
         display_feature = feature.replace('_', ' ')
         value = readable_values.get(feature, "Unknown")
         impact = float(shap_values[idx])
-        impact_abs = abs(impact)
         
+        # Determine if this factor increases or decreases risk
         if impact > 0:
-            direction = "increases"
-            color = "#ef4444"  # Red for increasing risk
-            icon = "↑"
+            direction = "INCREASES"
+            icon = "⬆️"
+            factor_class = "positive"  # Positive impact on risk (bad)
         else:   
-            direction = "decreases"
-            color = "#10b981"  # Green for decreasing risk
-            icon = "↓"
+            direction = "DECREASES"
+            icon = "⬇️"
+            factor_class = "negative"  # Negative impact on risk (good)
+        
+        # Create custom explanations for common factors
+        factor_explanation = ""
+        if feature == "Weight":
+            if impact > 0:
+                factor_explanation = f"Higher weight ({value}) is directly linked to increased obesity risk."
+            else:
+                factor_explanation = f"Your weight ({value}) helps lower your obesity risk."
+                
+        elif feature == "Age":
+            if impact > 0:
+                factor_explanation = f"At age {value}, your metabolism may be slowing, increasing obesity risk."
+            else:
+                factor_explanation = f"Your age ({value}) is associated with lower obesity risk in our model."
+                
+        elif feature == "Physical_Activity":
+            if value in ["Never", "Once or twice a week"]:
+                factor_explanation = "Low physical activity significantly increases obesity risk."
+            else:
+                factor_explanation = "Regular exercise helps prevent obesity by burning calories and building muscle."
+                
+        elif feature == "High_Caloric_Food":
+            if value == "Yes":
+                factor_explanation = "Regular consumption of high-calorie foods directly increases obesity risk."
+            else:
+                factor_explanation = "Avoiding high-calorie foods helps maintain a healthy weight."
+                
+        elif feature == "Vegetable_Consumption":
+            if value == "Never":
+                factor_explanation = "Not eating vegetables is linked to higher obesity risk."
+            else:
+                factor_explanation = "Eating vegetables helps maintain a healthy weight and provides essential nutrients."
+                
+        elif feature == "Family_History":
+            if value == "Yes":
+                factor_explanation = "Genetic factors from family history can predispose you to obesity."
+            else:
+                factor_explanation = "No family history of obesity reduces your genetic risk factors."
+                
+        elif feature == "Snacking":
+            if value in ["Frequently", "Always"]:
+                factor_explanation = "Frequent snacking can lead to consuming excess calories."
+            else:
+                factor_explanation = "Limited snacking helps control your total calorie intake."
+                
+        elif feature == "Water_Intake":
+            if value == "More than 2L":
+                factor_explanation = "Good hydration helps control appetite and supports metabolism."
+            else:
+                factor_explanation = "Increased water intake could help reduce your obesity risk."
+                
+        elif feature == "Screen_Time":
+            if value in ["1-3h", "More than 3h"]:
+                factor_explanation = "High screen time is associated with sedentary behavior and increased obesity risk."
+            else:
+                factor_explanation = "Limited screen time likely means you're more physically active."
+        
+        # Default explanation if nothing specific is defined
+        if not factor_explanation:
+            if impact > 0:
+                factor_explanation = f"Your {display_feature.lower()} ({value}) contributes to higher obesity risk."
+            else:
+                factor_explanation = f"Your {display_feature.lower()} ({value}) helps reduce your obesity risk."
         
         explanation += f"""
-        <div class="feature-impact">
-            <div class="feature-name">{display_feature}</div>
-            <div class="feature-value">{value}</div>
-            <div class="impact-indicator" style="color: {color}">
-                {icon} {direction} risk {impact_abs:.2f}
+        <div class="factor-box {factor_class}">
+            <div class="factor-header">
+                <span class="factor-icon">{icon}</span>
+                <span class="factor-title {factor_class}">{display_feature}: {value}</span>
             </div>
+            <p style="margin: 0; font-size: 16px;">{factor_explanation}</p>
+            <p style="margin-top: 8px; font-size: 15px; font-weight: bold; color: {'#ef4444' if factor_class == 'positive' else '#10b981'}">
+                This {direction.lower()} your obesity risk
+            </p>
         </div>
         """
+    
+    # Add personalized recommendations based on the major factors
+    explanation += """
+    <div class="recommendations">
+        <h3>What You Can Do</h3>
+        <ul>
+    """
+    
+    # Create custom recommendations based on the top factors
+    recommendations = []
+    for idx in top_indices:
+        feature = feature_names[idx]
+        impact = float(shap_values[idx])
+        
+        # Only create recommendations for factors that increase risk
+        if impact <= 0:
+            continue
+            
+        if feature == "Weight":
+            recommendations.append("Work with a healthcare provider to develop a healthy weight loss plan")
+        elif feature == "Physical_Activity":
+            recommendations.append("Aim for at least 150 minutes of moderate exercise each week")
+        elif feature == "High_Caloric_Food":
+            recommendations.append("Reduce consumption of fast food, fried foods, and sugary snacks")
+        elif feature == "Vegetable_Consumption":
+            recommendations.append("Add more vegetables to your meals - aim for half your plate to be vegetables")
+        elif feature == "Snacking":
+            recommendations.append("Replace unhealthy snacks with fruits, vegetables, or nuts")
+        elif feature == "Water_Intake":
+            recommendations.append("Drink more water throughout the day (aim for 2L or more)")
+        elif feature == "Screen_Time":
+            recommendations.append("Take breaks from screens to walk or stretch every hour")
+        elif feature == "Main_Meals":
+            recommendations.append("Focus on regular, balanced meals instead of skipping or overeating")
+        elif feature == "Alcohol":
+            recommendations.append("Reduce alcohol consumption, which contains empty calories")
+        elif feature == "Transportation":
+            recommendations.append("Look for opportunities to walk or bike instead of driving when possible")
+    
+    # Add default recommendation if none were generated
+    if not recommendations:
+        recommendations.append("Focus on maintaining a balanced diet and regular physical activity")
+        recommendations.append("Consult with a healthcare provider for personalized health advice")
+    
+    # Add the recommendations to the explanation
+    for recommendation in recommendations:
+        explanation += f"""
+        <li>{recommendation}</li>
+        """
+    
+    explanation += """
+        </ul>
+    </div>
+    """
+    
     
     explanation += "</div>"
     
     return explanation
+
+
+def create_health_gauge(score):
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = score,
+        domain = {'x': [0, 1], 'y': [0, 1]},
+        title = {'text': "Health Score", 'font': {'size': 24}},
+        gauge = {
+            'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "gray"},
+            'bar': {'color': get_color_from_score(score)},
+            'bgcolor': "white",
+            'borderwidth': 2,
+            'bordercolor': "gray",
+            'steps': [
+                {'range': [0, 40], 'color': '#fee2e2'},
+                {'range': [40, 70], 'color': '#fef9c3'},
+                {'range': [70, 100], 'color': '#dcfce7'}
+            ],
+        }
+    ))
+    
+    fig.update_layout(
+        height=250,
+        margin=dict(l=30, r=30, t=30, b=0),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    )
+    
+    return fig
+
+# Get color based on health score
+def get_color_from_score(score):
+    if score < 40:
+        return "#ef4444"  # red
+    elif score < 70:
+        return "#f59e0b"  # amber
+    else:
+        return "#10b981"  # green
+
+# Calculate BMI color based on value
+def get_bmi_color(bmi):
+    if bmi < 18.5:
+        return "#f59e0b"  # Underweight - amber
+    elif 18.5 <= bmi < 25:
+        return "#10b981"  # Normal - green
+    elif 25 <= bmi < 30:
+        return "#f59e0b"  # Overweight - amber
+    else:
+        return "#ef4444"  # Obese - red
+
+# Calculate health score from user inputs
+def calculate_health_score(bmi, activity_encoded, vegetable_encoded, high_caloric_food_encoded, 
+                          calorie_monitoring_encoded, smoking_encoded, alcohol_encoded, 
+                          screen_encoded, family_history_encoded, water_encoded):
+    # Base score
+    score = 70
+    
+    # BMI impact
+    if bmi < 18.5:  # Underweight
+        score -= 5
+    elif 18.5 <= bmi < 25:  # Normal
+        score += 10
+    elif 25 <= bmi < 30:  # Overweight
+        score -= 5
+    else:  # Obese
+        score -= 15
+    
+    # Activity impact
+    if activity_encoded == 0:
+        score -= 10
+    elif activity_encoded == 1:
+        score -= 5
+    elif activity_encoded == 2:
+        score += 5
+    elif activity_encoded >= 3:
+        score += 10
+    
+    # Diet impact
+    score += (vegetable_encoded * 3)
+    score -= (8 if high_caloric_food_encoded else 0)
+    score += (5 if calorie_monitoring_encoded else 0)
+    score += (water_encoded * 2)
+    
+    # Risk factors
+    score -= (15 if smoking_encoded else 0)
+    score -= (alcohol_encoded * 3)
+    score -= (screen_encoded * 2)
+    score -= (5 if family_history_encoded else 0)
+    
+    # Ensure score is between 0 and 100
+    return max(0, min(100, score))
+
+# Generate health achievements based on metrics
+def get_achievements(bmi, activity_encoded, vegetable_encoded, water_encoded, calorie_monitoring_encoded):
+    achievements = []
+    
+    if 18.5 <= bmi < 25:
+        achievements.append(("Healthy BMI", "Maintaining a BMI in the healthy range"))
+        
+    if activity_encoded >= 2:
+        achievements.append(("Active Lifestyle", "Regular physical activity"))
+        
+    if vegetable_encoded >= 2:
+        achievements.append(("Nutrition Expert", "High vegetable consumption"))
+        
+    if water_encoded >= 2:
+        achievements.append(("Well Hydrated", "Drinking enough water daily"))
+        
+    if calorie_monitoring_encoded:
+        achievements.append(("Mindful Eater", "Monitoring calorie intake"))
+    
+    return achievements
+
+# Create mini charts for tracking progress
+def create_progress_chart(current, target, title, color):
+    progress = min(100, (current / target) * 100)
+    
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = progress,
+        domain = {'x': [0, 1], 'y': [0, 1]},
+        title = {'text': title, 'font': {'size': 14}},
+        gauge = {
+            'axis': {'range': [None, 100], 'tickwidth': 0, 'visible': False},
+            'bar': {'color': color},
+            'bgcolor': "#e2e8f0",
+            'borderwidth': 0,
+        },
+        number = {'suffix': "%"}
+    ))
+    
+    fig.update_layout(
+        height=120,
+        margin=dict(l=10, r=10, t=40, b=10),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    )
+    
+    return fig
 
 # Main application header
 st.markdown('<h1 class="main-header">Obesity Risk Prediction</h1>', unsafe_allow_html=True)
@@ -898,44 +1520,231 @@ with tabs[0]:
                         # Display text explanation
                         try:
                             explanation = generate_text_explanation(shap_values_for_instance, feature_names, readable_values)
-                            # Use components.html instead of markdown to properly render HTML
-                            import streamlit.components.v1 as components
-                            components.html(f"""
-                            <style>
-                            .explanation-card {{
-                                background-color: #ffffff;
-                                border-radius: 0.5rem;
-                                padding: 1rem;
-                                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                                margin-bottom: 1rem;
-                            }}
-                            .feature-impact {{
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                padding: 0.5rem 0;
-                                border-bottom: 1px solid #f1f5f9;
-                            }}
-                            .feature-impact:last-child {{
-                                border-bottom: none;
-                            }}
-                            .feature-name {{
-                                font-weight: 500;
-                                flex: 2;
-                            }}
-                            .feature-value {{
-                                color: #64748b;
-                                flex: 1;
-                                text-align: center;
-                            }}
-                            .impact-indicator {{
-                                flex: 1;
-                                text-align: right;
-                                font-weight: 500;
-                            }}
-                            </style>
-                            {explanation}
-                            """, height=300)
+                            # Use streamlit components.html to render the HTML
+                            with st.container(height=550):  # Increased height to accommodate the enhanced explanation
+                                st.components.v1.html(f"""
+                                <style>
+                                /* Base container styling */
+                                .explanation-card {{
+                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                    border: 1px solid #e1e4e8;
+                                    border-radius: 16px;
+                                    padding: 24px;
+                                    margin: 0 auto;
+                                    background-color: white;
+                                    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+                                    overflow-y: auto;
+                                    max-height: 520px;
+                                    transition: all 0.3s ease;
+                                }}
+                                
+                                .explanation-card:hover {{
+                                    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                                }}
+                                
+                                /* Risk level header */
+                                .risk-header {{
+                                    text-align: center;
+                                    margin-bottom: 28px;
+                                    padding: 18px;
+                                    background-color: #f8f9fa;
+                                    border-radius: 12px;
+                                    border-left: 5px solid #3498db;
+                                    transition: all 0.3s ease;
+                                }}
+                                
+                                .risk-header:hover {{
+                                    background-color: #e9f7fe;
+                                }}
+                                
+                                /* Factor box styles */
+                                .factor-box {{
+                                    margin-bottom: 22px;
+                                    padding: 18px;
+                                    border-radius: 12px;
+                                    border-left-width: 5px;
+                                    border-left-style: solid;
+                                    transition: all 0.3s ease;
+                                    position: relative;
+                                    overflow: hidden;
+                                }}
+                                
+                                .factor-box::after {{
+                                    content: '';
+                                    position: absolute;
+                                    bottom: 0;
+                                    right: 0;
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 50% 0 0 0;
+                                    opacity: 0.1;
+                                    z-index: 0;
+                                }}
+                                
+                                .factor-box.positive {{
+                                    background-color: #fff5f5;
+                                    border-left-color: #ef4444;
+                                }}
+                                
+                                .factor-box.positive::after {{
+                                    background-color: #ef4444;
+                                }}
+                                
+                                .factor-box.negative {{
+                                    background-color: #f0fff4;
+                                    border-left-color: #10b981;
+                                }}
+                                
+                                .factor-box.negative::after {{
+                                    background-color: #10b981;
+                                }}
+                                
+                                .factor-box:hover {{
+                                    transform: translateY(-2px);
+                                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                                }}
+                                
+                                /* Factor header with icon */
+                                .factor-header {{
+                                    display: flex;
+                                    align-items: center;
+                                    margin-bottom: 12px;
+                                    position: relative;
+                                    z-index: 1;
+                                }}
+                                
+                                .factor-icon {{
+                                    font-size: 22px;
+                                    margin-right: 10px;
+                                    width: 32px;
+                                    height: 32px;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    color: white;
+                                }}
+                                
+                                .factor-icon.positive {{
+                                    background-color: #ef4444;
+                                }}
+                                
+                                .factor-icon.negative {{
+                                    background-color: #10b981;
+                                }}
+                                
+                                .factor-title {{
+                                    font-weight: 600;
+                                    font-size: 18px;
+                                }}
+                                
+                                .factor-title.positive {{
+                                    color: #ef4444;
+                                }}
+                                
+                                .factor-title.negative {{
+                                    color: #10b981;
+                                }}
+                                
+                                .factor-content {{
+                                    position: relative;
+                                    z-index: 1;
+                                    font-size: 16px;
+                                    line-height: 1.6;
+                                }}
+                                
+                                /* BMI box styling */
+                                .bmi-box {{
+                                    background-color: #f0f5ff;
+                                    border-radius: 12px;
+                                    padding: 18px;
+                                    margin-bottom: 28px;
+                                    border-left: 5px solid #3b82f6;
+                                    transition: all 0.3s ease;
+                                }}
+                                
+                                .bmi-box:hover {{
+                                    background-color: #e6effd;
+                                    transform: translateY(-2px);
+                                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                                }}
+                                
+                                /* Recommendations section */
+                                .recommendations {{
+                                    margin-top: 28px;
+                                    background-color: #f8f9fa;
+                                    border-radius: 12px;
+                                    padding: 18px;
+                                    border-left: 5px solid #3b82f6;
+                                    transition: all 0.3s ease;
+                                }}
+                                
+                                .recommendations:hover {{
+                                    background-color: #e6effd;
+                                    transform: translateY(-2px);
+                                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                                }}
+                                
+                                .recommendations h3 {{
+                                    margin-top: 0;
+                                    color: #3b82f6;
+                                    font-size: 20px;
+                                    display: flex;
+                                    align-items: center;
+                                }}
+                                
+                                .recommendations h3::before {{
+                                    content: '💡';
+                                    margin-right: 8px;
+                                }}
+                                
+                                .recommendations ul {{
+                                    margin-top: 12px;
+                                    padding-left: 28px;
+                                }}
+                                
+                                .recommendations li {{
+                                    margin-bottom: 10px;
+                                    font-size: 16px;
+                                    position: relative;
+                                }}
+                                
+                                .recommendations li::before {{
+                                    content: '✓';
+                                    position: absolute;
+                                    left: -20px;
+                                    color: #3b82f6;
+                                    font-weight: bold;
+                                }}
+                                
+                                /* Disclaimer */
+                                .disclaimer {{
+                                    margin-top: 24px;
+                                    font-size: 14px;
+                                    color: #666;
+                                    text-align: center;
+                                    padding: 10px;
+                                    background-color: #f8f9fa;
+                                    border-radius: 8px;
+                                }}
+                                
+                                /* Responsive adjustments */
+                                @media (max-width: 768px) {{
+                                    .explanation-card {{
+                                        padding: 16px;
+                                    }}
+                                    
+                                    .factor-title {{
+                                        font-size: 16px;
+                                    }}
+                                    
+                                    .factor-content {{
+                                        font-size: 14px;
+                                    }}
+                                }}
+                                </style>
+                                {explanation}
+                                """, height=520)
                         except Exception as e:
                             st.error(f"Error generating text explanation: {str(e)}")
                             # Show simple explanation as fallback
@@ -945,7 +1754,6 @@ with tabs[0]:
                             for feature, value in top_features:
                                 direction = "increases" if value > 0 else "decreases"
                                 st.markdown(f"- **{feature}**: {direction} risk by {abs(value):.2f}")
-                        
                         # SHAP visualization tabs
                         shap_tabs = st.tabs(["Force Plot", "Waterfall Plot", "Feature Importance", "Decision Plot"])
                         
@@ -1104,25 +1912,72 @@ with tabs[0]:
                     import traceback
                     st.error(f"Detailed error: {traceback.format_exc()}")
 with tabs[1]:
+    # Load custom CSS
+    load_css()
+    
     st.markdown('<h2 class="subheader">Your Health Profile</h2>', unsafe_allow_html=True)
     
     if 'prediction' not in locals():
+        # Enhanced placeholder with animation
         st.markdown('<div class="placeholder-content">'
                   '<div class="placeholder-icon">📊</div>'
                   '<div class="placeholder-text">Complete the Risk Assessment first to view your Health Profile</div>'
+                  '<div style="margin-top:10px; font-size:0.9rem; color:#94a3b8;">Fill out the form on the Assessment tab to generate your personalized health insights</div>'
                   '</div>', unsafe_allow_html=True)
     else:
-        # Display health metrics
+        # Calculate health score
+        health_score = calculate_health_score(bmi, activity_encoded, vegetable_encoded, 
+                                             high_caloric_food_encoded, calorie_monitoring_encoded, 
+                                             smoking_encoded, alcohol_encoded, screen_encoded, 
+                                             family_history_encoded, water_encoded)
+        
+        # Get health achievements
+        achievements = get_achievements(bmi, activity_encoded, vegetable_encoded, water_encoded, calorie_monitoring_encoded)
+        
+        # Health Score visualization
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-title">Your Health Score</h3>', unsafe_allow_html=True)
+        
+        score_col1, score_col2 = st.columns([1, 2])
+        
+        with score_col1:
+            score_gauge = create_health_gauge(health_score)
+            st.plotly_chart(score_gauge, use_container_width=True, config={'displayModeBar': False})
+        
+        with score_col2:
+            score_text = "Needs Improvement" if health_score < 40 else "Good" if health_score < 70 else "Excellent"
+            score_color = get_color_from_score(health_score)
+            
+            st.markdown(f'<div style="margin-bottom:15px;">'
+                      f'<div style="font-size:1.25rem; font-weight:600; margin-bottom:5px;">Your health is <span style="color:{score_color}">{score_text}</span></div>'
+                      f'<div style="color:#64748b;">Based on your assessment responses</div>'
+                      f'</div>', unsafe_allow_html=True)
+            
+            # Display achievements
+            if achievements:
+                st.markdown('<div style="margin-top:15px; margin-bottom:10px; font-weight:500;">Your achievements:</div>', unsafe_allow_html=True)
+                for achievement, description in achievements[:3]:  # Limit to 3
+                    st.markdown(f'<div class="badge badge-success" title="{description}">{achievement}</div>', unsafe_allow_html=True)
+        
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Display health metrics with enhanced visuals
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<h3 class="section-title">Key Health Metrics</h3>', unsafe_allow_html=True)
         
         # Create metric containers
         st.markdown('<div class="metric-container">', unsafe_allow_html=True)
         
-        # BMI metric
+        # BMI metric with tooltip
+        bmi_color = get_bmi_color(bmi)
+        bmi_status = "Underweight" if bmi < 18.5 else "Normal" if bmi < 25 else "Overweight" if bmi < 30 else "Obese"
+        
         st.markdown(f'<div class="metric-item">'
-                  f'<div class="metric-value" style="color: {bmi_color}">{bmi}</div>'
+                  f'<div class="metric-value" style="color: {bmi_color}">{bmi:.1f}</div>'
                   f'<div class="metric-label">BMI</div>'
+                  f'<div class="tooltip metric-info">ⓘ'
+                  f'<span class="tooltiptext">Body Mass Index: {bmi_status}<br>Healthy range: 18.5-24.9</span>'
+                  f'</div>'
                   f'</div>', unsafe_allow_html=True)
         
         # Age metric
@@ -1141,12 +1996,15 @@ with tabs[1]:
         st.markdown(f'<div class="metric-item">'
                   f'<div class="metric-value" style="color: #ec4899">{weight} kg</div>'
                   f'<div class="metric-label">Weight</div>'
+                  f'<div class="tooltip metric-info">ⓘ'
+                  f'<span class="tooltiptext">Ideal weight range: {int(18.5 * (height/100)**2)}-{int(24.9 * (height/100)**2)} kg</span>'
+                  f'</div>'
                   f'</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Lifestyle summary
+        # Lifestyle summary with enhanced visuals
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<h3 class="section-title">Lifestyle Summary</h3>', unsafe_allow_html=True)
         
@@ -1156,9 +2014,14 @@ with tabs[1]:
         with ls_col1:
             st.markdown('<p class="section-title">Physical Activity</p>', unsafe_allow_html=True)
             activity_color = "#ef4444" if activity_encoded < 2 else "#10b981"
+            activity_progress = min(100, (activity_encoded / 3) * 100) 
+            
             st.markdown(f'<div style="padding: 16px; border-radius: 8px; background-color: {activity_color}20; border: 1px solid {activity_color};">'
                       f'<div style="font-weight: 600; font-size: 1.1rem; color: {activity_color}">{physical_activity}</div>'
                       f'<div style="font-size: 0.9rem; color: #64748b; margin-top: 4px;">Activity Level</div>'
+                      f'<div style="height: 6px; background-color: #e2e8f0; border-radius: 3px; margin-top: 10px;">'
+                      f'<div style="height: 6px; width: {activity_progress}%; background-color: {activity_color}; border-radius: 3px;"></div>'
+                      f'</div>'
                       f'</div>', unsafe_allow_html=True)
         
         with ls_col2:
@@ -1166,10 +2029,14 @@ with tabs[1]:
             diet_score = vegetable_encoded * 2 - (1 if high_caloric_food_encoded else 0) + (1 if calorie_monitoring_encoded else 0)
             diet_status = "Needs Improvement" if diet_score < 2 else "Good" if diet_score < 4 else "Excellent"
             diet_color = "#ef4444" if diet_score < 2 else "#f59e0b" if diet_score < 4 else "#10b981"
+            diet_progress = min(100, (diet_score / 6) * 100)
             
             st.markdown(f'<div style="padding: 16px; border-radius: 8px; background-color: {diet_color}20; border: 1px solid {diet_color};">'
                       f'<div style="font-weight: 600; font-size: 1.1rem; color: {diet_color}">{diet_status}</div>'
                       f'<div style="font-size: 0.9rem; color: #64748b; margin-top: 4px;">Diet Quality</div>'
+                      f'<div style="height: 6px; background-color: #e2e8f0; border-radius: 3px; margin-top: 10px;">'
+                      f'<div style="height: 6px; width: {diet_progress}%; background-color: {diet_color}; border-radius: 3px;"></div>'
+                      f'</div>'
                       f'</div>', unsafe_allow_html=True)
         
         with ls_col3:
@@ -1177,18 +2044,23 @@ with tabs[1]:
             risk_count = family_history_encoded + smoking_encoded + (1 if alcohol_encoded > 1 else 0) + (1 if screen_encoded > 2 else 0)
             risk_status = "Low" if risk_count < 1 else "Moderate" if risk_count < 3 else "High"
             risk_color = "#10b981" if risk_count < 1 else "#f59e0b" if risk_count < 3 else "#ef4444"
+            risk_progress = min(100, (risk_count / 4) * 100)
             
             st.markdown(f'<div style="padding: 16px; border-radius: 8px; background-color: {risk_color}20; border: 1px solid {risk_color};">'
                       f'<div style="font-weight: 600; font-size: 1.1rem; color: {risk_color}">{risk_status}</div>'
                       f'<div style="font-size: 0.9rem; color: #64748b; margin-top: 4px;">Risk Level</div>'
+                      f'<div style="height: 6px; background-color: #e2e8f0; border-radius: 3px; margin-top: 10px;">'
+                      f'<div style="height: 6px; width: {risk_progress}%; background-color: {risk_color}; border-radius: 3px;"></div>'
+                      f'</div>'
                       f'</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Recommendations
+        # Enhanced recommendations
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<h3 class="section-title">Personalized Recommendations</h3>', unsafe_allow_html=True)
         
+        # Same recommendations logic as before but with enhanced display
         recommendations = []
         
         # Diet recommendations
@@ -1230,14 +2102,35 @@ with tabs[1]:
             recommendations.append("Aim for at least 150 minutes of moderate activity per week")
             recommendations.append("Ensure adequate sleep of 7-9 hours each night")
         
-        # Display recommendations
+        # Display recommendations with enhanced styling
         for i, rec in enumerate(recommendations[:6]):  # Limit to 6 recommendations
-            st.markdown(f'<div style="padding: 12px; border-radius: 8px; background-color: #f8fafc; margin-bottom: 8px; border-left: 4px solid #3b82f6;">'
-                      f'<div style="font-weight: 500;">{i+1}. {rec}</div>'
+            st.markdown(f'<div class="recommendation-item">'
+                      f'<div class="recommendation-number">{i+1}</div>'
+                      f'<div class="recommendation-text">{rec}</div>'
+                      f'</div>', unsafe_allow_html=True)
+        
+        # Action plan section
+        st.markdown('<div style="margin-top: 20px;">', unsafe_allow_html=True)
+        st.markdown('<h4 style="font-size: 1.1rem; font-weight: 600; color: #334155; margin-bottom: 10px;">Next Steps Action Plan</h4>', unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown(f'<div style="padding: 12px; border-radius: 8px; background-color: #f0f9ff; border: 1px solid #bae6fd;">'
+                      f'<div style="font-weight: 600; color: #0284c7; margin-bottom: 5px;">This Week</div>'
+                      f'<div style="color: #334155; font-size: 0.9rem;">Focus on your top recommendation and track your progress daily.</div>'
+                      f'</div>', unsafe_allow_html=True)
+            
+        with col2:
+            st.markdown(f'<div style="padding: 12px; border-radius: 8px; background-color: #f0fdf4; border: 1px solid #bbf7d0;">'
+                      f'<div style="font-weight: 600; color: #16a34a; margin-bottom: 5px;">This Month</div>'
+                      f'<div style="color: #334155; font-size: 0.9rem;">Implement at least three recommendations and schedule a follow-up assessment.</div>'
                       f'</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
-
+        
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+       
 with tabs[2]:
     st.markdown('<h2 class="subheader">Model Insights</h2>', unsafe_allow_html=True)
     
